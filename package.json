@@ -1,0 +1,25 @@
+{
+  "name": "food-delivery-nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 8081",
+    "build": "next build",
+    "start": "next start",
+    "relay": "relay-compiler --src ./src --schema ./src/graphql/schema.graphql"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.10.0",
+    "@material-ui/icons": "^4.9.1",
+    "axios": "^0.19.2",
+    "graphql": "^15.0.0",
+    "next": "9.3.6",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-relay": "^9.1.0"
+  },
+  "devDependencies": {
+    "babel-plugin-relay": "^9.1.0",
+    "relay-compiler": "^9.1.0"
+  }
+}
