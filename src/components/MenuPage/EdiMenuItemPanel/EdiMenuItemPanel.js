@@ -33,17 +33,11 @@ const useStyles = makeStyles((theme) => ({
 const EdiMenuItemPanel = (props) => {
   const classes = useStyles();
 
-  const [formData, setFormData] = useState({});
-
-  if (formData.title === undefined && props.title) {
-    formData.title = props.title;
-  }
-  if (formData.price === undefined && props.price) {
-    formData.price = props.price;
-  }
-  if (formData.categoryTitle === undefined && props.categoryTitle) {
-    formData.categoryTitle = props.categoryTitle;
-  }
+  const [formData, setFormData] = useState({
+    title: props.title || '',
+    price: props.price || '',
+    categoryTitle: props.categoryTitle || ''
+  });
 
   const onSubmit = (e) => {
     e.preventDefault();

@@ -2,8 +2,8 @@ import { graphql, commitMutation } from 'react-relay';
 import env from '../Environment';
 
 const mutation = graphql`
-  mutation createMenuItemMutation($input: CreateMenuItemInput!) {
-    createMenuItem(input: $input) {
+  mutation createMenuItemMutation($menuItem: MenuItemInput!) {
+    createMenuItem(menuItem: $menuItem) {
       id
     }
   }
@@ -13,7 +13,7 @@ function createMenuItem(data, onComplete) {
   return commitMutation(env, {
     mutation,
     variables: {
-      input: {
+      menuItem: {
         title: data.title,
         price: data.price,
         menuCategory: data.categoryTitle,

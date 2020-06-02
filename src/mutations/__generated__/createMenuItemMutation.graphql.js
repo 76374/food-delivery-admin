@@ -8,13 +8,13 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type CreateMenuItemInput = {|
+export type MenuItemInput = {|
   title: string,
   price: number,
   menuCategory: string,
 |};
 export type createMenuItemMutationVariables = {|
-  input: CreateMenuItemInput
+  menuItem: MenuItemInput
 |};
 export type createMenuItemMutationResponse = {|
   +createMenuItem: ?{|
@@ -30,9 +30,9 @@ export type createMenuItemMutation = {|
 
 /*
 mutation createMenuItemMutation(
-  $input: CreateMenuItemInput!
+  $menuItem: MenuItemInput!
 ) {
-  createMenuItem(input: $input) {
+  createMenuItem(menuItem: $menuItem) {
     id
   }
 }
@@ -43,8 +43,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "CreateMenuItemInput!"
+    "name": "menuItem",
+    "type": "MenuItemInput!"
   }
 ],
 v1 = [
@@ -53,8 +53,8 @@ v1 = [
     "args": [
       {
         "kind": "Variable",
-        "name": "input",
-        "variableName": "input"
+        "name": "menuItem",
+        "variableName": "menuItem"
       }
     ],
     "concreteType": "MenuItem",
@@ -94,11 +94,11 @@ return {
     "metadata": {},
     "name": "createMenuItemMutation",
     "operationKind": "mutation",
-    "text": "mutation createMenuItemMutation(\n  $input: CreateMenuItemInput!\n) {\n  createMenuItem(input: $input) {\n    id\n  }\n}\n"
+    "text": "mutation createMenuItemMutation(\n  $menuItem: MenuItemInput!\n) {\n  createMenuItem(menuItem: $menuItem) {\n    id\n  }\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'f7355474bb71ee81192ef12c12c87620';
+(node/*: any*/).hash = '12bb0c52ba88656e7de943c31b0ccb87';
 
 module.exports = node;

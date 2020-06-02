@@ -4,7 +4,6 @@ import Typography from '@material-ui/core/Typography';
 
 import MenuItem from './MenuItem/MenuItem';
 import styles from './MenuCategory.module.css';
-import { Divider } from '@material-ui/core';
 
 const MenuCategory = (props) => {
   const { menuCategory, editItemClicked, deleteItemClicked } = props;
@@ -27,15 +26,12 @@ const MenuCategory = (props) => {
 
   const getMenuItem = (data) => {
     return (
-      <>
-        <MenuItem
-          menuItem={data}
-          key={data.__id}
-          editClicked={onEditItemClicked}
-          deleteClicked={onDeleteItemClicked}
-        />
-        <Divider />
-      </>
+      <MenuItem
+        menuItem={data}
+        key={data.__id}
+        editClicked={onEditItemClicked}
+        deleteClicked={onDeleteItemClicked}
+      />
     );
   };
 

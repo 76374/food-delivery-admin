@@ -9,9 +9,9 @@ type Query {
 }
 
 type Mutation {
-  createMenuItem(input: CreateMenuItemInput!): MenuItem
-  editMenuItem(input: EditMenuItemInput!): MenuItem
-  deleteMenuItem(input: DeleteMenuItemInput!): Boolean
+  createMenuItem(menuItem: MenuItemInput!): MenuItem
+  editMenuItem(id: String!, menuItem: MenuItemInput!): MenuItem
+  deleteMenuItem(id: String!): Boolean
   createOrder(input: CreateOrderInput!): Order
 }
 
@@ -46,21 +46,10 @@ type User {
 }
 
 
-input CreateMenuItemInput {
+input MenuItemInput {
   title: String!
   price: Float!
   menuCategory: String!
-}
-
-input EditMenuItemInput {
-  id: String!
-  price: Float
-  title: String
-  menuCategory: String
-}
-
-input DeleteMenuItemInput {
-  id: String!
 }
 
 input CreateOrderInput {

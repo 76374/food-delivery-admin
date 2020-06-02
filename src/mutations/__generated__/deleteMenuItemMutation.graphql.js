@@ -8,11 +8,8 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type DeleteMenuItemInput = {|
-  id: string
-|};
 export type deleteMenuItemMutationVariables = {|
-  input: DeleteMenuItemInput
+  id: string
 |};
 export type deleteMenuItemMutationResponse = {|
   +deleteMenuItem: ?boolean
@@ -26,9 +23,9 @@ export type deleteMenuItemMutation = {|
 
 /*
 mutation deleteMenuItemMutation(
-  $input: DeleteMenuItemInput!
+  $id: String!
 ) {
-  deleteMenuItem(input: $input)
+  deleteMenuItem(id: $id)
 }
 */
 
@@ -37,8 +34,8 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "DeleteMenuItemInput!"
+    "name": "id",
+    "type": "String!"
   }
 ],
 v1 = [
@@ -47,8 +44,8 @@ v1 = [
     "args": [
       {
         "kind": "Variable",
-        "name": "input",
-        "variableName": "input"
+        "name": "id",
+        "variableName": "id"
       }
     ],
     "kind": "ScalarField",
@@ -77,11 +74,11 @@ return {
     "metadata": {},
     "name": "deleteMenuItemMutation",
     "operationKind": "mutation",
-    "text": "mutation deleteMenuItemMutation(\n  $input: DeleteMenuItemInput!\n) {\n  deleteMenuItem(input: $input)\n}\n"
+    "text": "mutation deleteMenuItemMutation(\n  $id: String!\n) {\n  deleteMenuItem(id: $id)\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '579e22c11930628048b29b46074cb886';
+(node/*: any*/).hash = '6010b72c732c2c0f19d3e37318905edf';
 
 module.exports = node;
