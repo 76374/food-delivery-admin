@@ -3,7 +3,8 @@ import { createFragmentContainer, graphql } from 'react-relay';
 import Typography from '@material-ui/core/Typography';
 
 import MenuItem from './MenuItem/MenuItem';
-import styles from './MenuCategory.module.css'
+import styles from './MenuCategory.module.css';
+import { Divider } from '@material-ui/core';
 
 const MenuCategory = (props) => {
   const { menuCategory, editItemClicked, deleteItemClicked } = props;
@@ -24,17 +25,19 @@ const MenuCategory = (props) => {
     deleteItemClicked && deleteItemClicked(id);
   }, []);
 
-  const getMenuItem = (data, index) =>{ 
-    console.log(index % 2 ? styles.itemLine : null);
-    return(
-    <MenuItem
-      menuItem={data}
-      key={data.__id}
-      editClicked={onEditItemClicked}
-      deleteClicked={onDeleteItemClicked}
-      className={index % 2 ? styles.itemLine : null}
-    />
-  );}
+  const getMenuItem = (data) => {
+    return (
+      <>
+        <MenuItem
+          menuItem={data}
+          key={data.__id}
+          editClicked={onEditItemClicked}
+          deleteClicked={onDeleteItemClicked}
+        />
+        <Divider />
+      </>
+    );
+  };
 
   return (
     <>
@@ -45,12 +48,7 @@ const MenuCategory = (props) => {
           </Typography>
         </td>
       </tr>
-      {props.menuCategory.items.map((item, index) => getMenuItem(item, index))}
-      <tr>
-        <td colSpan="4">
-          <hr />
-        </td>
-      </tr>
+      {props.menuCategory.items.map((item) => getMenuItem(item))}
     </>
   );
 };

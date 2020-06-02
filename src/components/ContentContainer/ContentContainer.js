@@ -4,7 +4,7 @@ import styles from './ContentContainer.module.css';
 const ContentContainer = (props) => {
   const { content } = props;
   if (!content) {
-    return <LinearProgress />;
+    return <LinearProgress color="secondary" />;
   }
   return (
     <div className={styles.container}>
