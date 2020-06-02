@@ -18,7 +18,7 @@ const MenuItem = (props) => {
   }, [id, deleteClicked]);
 
   return (
-    <tr>
+    <tr className={props.className}>
       <td><Typography>{title}</Typography></td>
       <td><Typography>{price}</Typography></td>
       <td><IconButton onClick={onEditClicked} size="small">

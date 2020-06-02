@@ -7,12 +7,12 @@ const Order = (props) => {
   const { date, price, items } = props.order;
   return (
     <div>
-      <hr />
       <div>{new Date(date).toISOString()}</div>
       {items.map((item, index) => (
         <OrderedItem orderItem={item} key={'OrderItem' + index} />
       ))}
       <div>{currencyFormat(price)}</div>
+      <hr />
     </div>
   );
 };
