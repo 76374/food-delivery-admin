@@ -43,9 +43,11 @@ const MenuCategory = (props) => {
     <>
       <tr>
         <td colSpan="4">
-          <Typography variant="h5" align="center">
-            {title}
-          </Typography>
+          <div className={styles.title}>
+            <Typography variant="h5" align="center">
+              {title}
+            </Typography>
+          </div>
         </td>
       </tr>
       {props.menuCategory.items.map((item) => getMenuItem(item))}
