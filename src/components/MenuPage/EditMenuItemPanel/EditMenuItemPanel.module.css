@@ -1,0 +1,20 @@
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.popup {
+  padding: 20px;
+}
+.inputsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+}
+.inputField {
+  margin: 8px 0px;
+}
+.buttonsContainer {
+  display: flex;
+  justify-content: center;
+}

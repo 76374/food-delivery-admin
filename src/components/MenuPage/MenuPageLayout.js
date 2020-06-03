@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import MenuCategory from './MenuCategory/MenuCategory';
-import EdiMenuItemPanel from './EdiMenuItemPanel/EdiMenuItemPanel';
+import EditMenuItemPanel from './EditMenuItemPanel/EditMenuItemPanel';
 import createMenuItem from '../../mutations/createMenuItem';
 import editMenuItem from '../../mutations/editMenuItem';
 import deleteMenuItem from '../../mutations/deleteMenuItem';
@@ -20,6 +20,7 @@ const MenuPageLayout = (props) => {
 
   const onEditCanceled = useCallback(() => {
     setEditMode(false);
+    setEditProps(null);
   }, [setEditMode]);
 
   const onEditItemClicked = useCallback(
@@ -100,7 +101,7 @@ const MenuPageLayout = (props) => {
       categoryTitle = editProps.categoryTitle;
     }
     return (
-      <EdiMenuItemPanel
+      <EditMenuItemPanel
         canceled={onEditCanceled}
         submited={onEditSubmited}
         title={title}
