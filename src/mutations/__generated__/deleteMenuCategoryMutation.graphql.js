@@ -8,24 +8,24 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type deleteMenuItemMutationVariables = {|
+export type deleteMenuCategoryMutationVariables = {|
   id: string
 |};
-export type deleteMenuItemMutationResponse = {|
-  +deleteMenuItem: ?any
+export type deleteMenuCategoryMutationResponse = {|
+  +deleteMenuCategory: ?any
 |};
-export type deleteMenuItemMutation = {|
-  variables: deleteMenuItemMutationVariables,
-  response: deleteMenuItemMutationResponse,
+export type deleteMenuCategoryMutation = {|
+  variables: deleteMenuCategoryMutationVariables,
+  response: deleteMenuCategoryMutationResponse,
 |};
 */
 
 
 /*
-mutation deleteMenuItemMutation(
+mutation deleteMenuCategoryMutation(
   $id: String!
 ) {
-  deleteMenuItem(id: $id)
+  deleteMenuCategory(id: $id)
 }
 */
 
@@ -49,7 +49,7 @@ v1 = [
       }
     ],
     "kind": "ScalarField",
-    "name": "deleteMenuItem",
+    "name": "deleteMenuCategory",
     "storageKey": null
   }
 ];
@@ -58,7 +58,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "deleteMenuItemMutation",
+    "name": "deleteMenuCategoryMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation"
   },
@@ -66,19 +66,19 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "deleteMenuItemMutation",
+    "name": "deleteMenuCategoryMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "deleteMenuItemMutation",
+    "name": "deleteMenuCategoryMutation",
     "operationKind": "mutation",
-    "text": "mutation deleteMenuItemMutation(\n  $id: String!\n) {\n  deleteMenuItem(id: $id)\n}\n"
+    "text": "mutation deleteMenuCategoryMutation(\n  $id: String!\n) {\n  deleteMenuCategory(id: $id)\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '6010b72c732c2c0f19d3e37318905edf';
+(node/*: any*/).hash = 'd8352c35b463aac266624e0dc40d9bdc';
 
 module.exports = node;

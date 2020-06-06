@@ -40,7 +40,6 @@ const NavBar = () => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(router.pathname);
     setCurrentTab(getTabIndex(router.pathname));
   }, [router]);
 

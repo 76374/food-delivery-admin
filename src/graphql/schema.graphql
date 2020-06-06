@@ -6,16 +6,25 @@ schema {
 type Query {
   menu: [MenuCategory]!
   orders: [Order]!
+  menuSchedule(date: Date): MenuSchedule
 }
 
 type Mutation {
+  createMenuCategory(title: String!): MenuCategory
+  editMenuCategory(id: String!, title: String!): MenuCategory
+  deleteMenuCategory(id: String!): Void
   createMenuItem(menuItem: MenuItemInput!): MenuItem
   editMenuItem(id: String!, menuItem: MenuItemInput!): MenuItem
-  deleteMenuItem(id: String!): Boolean
-  createOrder(input: CreateOrderInput!): Order
+  deleteMenuItem(id: String!): Void
+
+  setSchedule(items:[String!]!, date: Date!): String
 }
 
+scalar Date
+scalar Void
+
 type MenuCategory {
+  id: String!
   title: String!
   items: [MenuItem]!
 }
@@ -38,6 +47,11 @@ type OrderItem {
   count: Int!
 }
 
+type AuthData {
+  token: String!
+  user: User!
+}
+
 type User {
   id: String!
   firstName: String!
@@ -45,6 +59,11 @@ type User {
   email: String!
 }
 
+type MenuSchedule {
+  id: String!
+  items: [MenuItem]!
+  date: Date
+}
 
 input MenuItemInput {
   title: String!
@@ -54,9 +73,4 @@ input MenuItemInput {
 
 input CreateOrderInput {
   items: [OrderInput!]!
-}
-
-input OrderInput {
-  itemId: String!
-  itemsCount: Int!
 }

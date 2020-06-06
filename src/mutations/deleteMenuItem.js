@@ -1,5 +1,4 @@
-import { graphql, commitMutation } from 'react-relay';
-import env from '../Environment';
+import { graphql } from 'react-relay';
 
 const mutation = graphql`
   mutation deleteMenuItemMutation($id: String!) {
@@ -7,21 +6,8 @@ const mutation = graphql`
   }
 `;
 
-function deleteMenuItem(id, onComplete) {
-  return commitMutation(env, {
-    mutation,
-    variables: {
-      id,
-    },
-    onCompleted: (store) => {
-      if (onComplete) {
-        onComplete();
-      }
-    },
-    onError: (e) => {
-      alert('Something happened on the server');
-    },
-  });
+function deleteMenuItem(id, onComplete, onError) {
+  return sendMutation(mutation, { id }, onComplete, onError);
 }
 
 export default deleteMenuItem;

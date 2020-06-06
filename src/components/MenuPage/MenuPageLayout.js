@@ -2,69 +2,68 @@ import React, { useState, useCallback } from 'react';
 import Router from 'next/router';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-
-import MenuCategory from './MenuCategory/MenuCategory';
-import EditMenuItemPanel from './EditMenuItemPanel/EditMenuItemPanel';
-import createMenuItem from '../../mutations/createMenuItem';
-import editMenuItem from '../../mutations/editMenuItem';
 import deleteMenuItem from '../../mutations/deleteMenuItem';
+import deleteMenuCategory from '../../mutations/deleteMenuCategory';
 import ContentContainer from '../ContentContainer/ContentContainer';
+import MenuCategory from './MenuCategory/MenuCategory';
+import EditMenuItemPopupContainer from './MenuPopups/EditMenuItemPopupContainer';
+import EditCategoryPopupContainer from './MenuPopups/EditCategoryPopupContainer';
+
 
 const MenuPageLayout = (props) => {
-  const [editMode, setEditMode] = useState(false);
-  const [editProps, setEditProps] = useState(null);
+  const [editItemProps, setEditItemProps] = useState(null);
+  const [editCategoryProps, setEditCategoryProps] = useState(null);
 
-  const onAddBtClick = useCallback(() => {
-    setEditMode(true);
+  const categoryAddHandler = useCallback(() => {
+    setEditCategoryProps({});
   }, []);
 
-  const onEditCanceled = useCallback(() => {
-    setEditMode(false);
-    setEditProps(null);
-  }, [setEditMode]);
+  const categoryEditHandler = useCallback((data) => {
+    setEditCategoryProps({...data});
+  }, []);
 
-  const onEditItemClicked = useCallback(
+  const categoryEditCancelHandler = useCallback(() => {
+    setEditCategoryProps(null);
+  }, []);
+
+  const categoryDeleteHandler = useCallback((id) => {
+    deleteMenuCategory(id, deleteCompleteHandler)
+  }, [])
+
+  const itemAddHandler = useCallback(
     (data) => {
-      setEditMode(true);
-      setEditProps(data);
+      setEditItemProps({
+        categoryTitle: data.title,
+        categoryId: data.id,
+      });
     },
-    [setEditMode, setEditProps]
+    [setEditItemProps]
   );
 
-  const onEditComplete = useCallback(() => {
+  const itemEditHandler = useCallback(
+    (data) => {
+      setEditItemProps({
+        itemId: data.itemData.id,
+        title: data.itemData.title,
+        price: data.itemData.price,
+        categoryTitle: data.title,
+        categoryId: data.id,
+      });
+    },
+    [setEditItemProps]
+  );
+
+  const deleteItemHandler = useCallback((id) => {
+    deleteMenuItem(id, deleteCompleteHandler);
+  }, []);
+
+  const deleteCompleteHandler = useCallback(() => {
     Router.reload();
   }, []);
 
-  const onEditSubmited = useCallback(
-    (data) => {
-      setEditMode(false);
-      setEditProps(null);
-      if (editProps) {
-        editMenuItem(
-          {
-            id: editProps.itemData.id,
-            title: data.title,
-            price: data.price,
-            categoryTitle: data.categoryTitle,
-          },
-          onEditComplete
-        );
-      } else {
-        createMenuItem(
-          { title: data.title, price: data.price, categoryTitle: data.categoryTitle },
-          onEditComplete
-        );
-      }
-    },
-    [editProps, onEditComplete, setEditMode, setEditProps]
-  );
-
-  const onDeleteItemClicked = useCallback(
-    (id) => {
-      deleteMenuItem(id, onEditComplete);
-    },
-    [onEditComplete]
-  );
+  const onEditItemCanceled = useCallback(() => {
+    setEditItemProps(null);
+  }, [setEditItemProps]);
 
   const getMenuLayout = () => {
     return (
@@ -75,41 +74,36 @@ const MenuPageLayout = (props) => {
               <MenuCategory
                 menuCategory={c}
                 key={'Category-' + c.__id}
-                editItemClicked={onEditItemClicked}
-                deleteItemClicked={onDeleteItemClicked}
+                onItemEdit={itemEditHandler}
+                onItemDelete={deleteItemHandler}
+                onItemAdd={itemAddHandler}
+                onCategoryEdit={categoryEditHandler}
+                onCategoryDelete={categoryDeleteHandler}
               />
             ))}
           </tbody>
         </table>
-        <IconButton onClick={onAddBtClick}>
+        <IconButton onClick={categoryAddHandler}>
           <AddCircleOutlineIcon fontSize="large" color="primary" />
         </IconButton>
       </>
     );
   };
 
-  const getEditLayout = () => {
-    if (!editMode) {
+  const getEditItemLayout = () => {
+    if (editItemProps === null) {
       return null;
     }
-    let title = null,
-      price = null,
-      categoryTitle = null;
-    if (editProps) {
-      title = editProps.itemData.title;
-      price = editProps.itemData.price;
-      categoryTitle = editProps.categoryTitle;
-    }
-    return (
-      <EditMenuItemPanel
-        canceled={onEditCanceled}
-        submited={onEditSubmited}
-        title={title}
-        price={price}
-        categoryTitle={categoryTitle}
-      />
-    );
+    const itemData = { ...editItemProps };
+    return <EditMenuItemPopupContainer data={itemData} onCancel={onEditItemCanceled}/>;
   };
+  const getEditCategoryLayout = () => {
+    if (editCategoryProps === null) {
+      return null;
+    }
+    const data = { ...editCategoryProps };
+    return <EditCategoryPopupContainer data={data} onCancel={categoryEditCancelHandler}/>;
+  }
 
   let layout = null;
   if (props.error) {
@@ -121,10 +115,11 @@ const MenuPageLayout = (props) => {
     );
   } else if (props.menu) {
     layout = (
-      <div>
+      <>
         {getMenuLayout()}
-        {getEditLayout()}
-      </div>
+        {getEditItemLayout()}
+        {getEditCategoryLayout()}
+      </>
     );
   }
 

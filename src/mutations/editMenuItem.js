@@ -1,5 +1,5 @@
-import { graphql, commitMutation } from 'react-relay';
-import env from '../Environment';
+import { graphql } from 'react-relay';
+import sendMutation from './sendMutation';
 
 const mutation = graphql`
   mutation editMenuItemMutation($id: String!, $menuItem: MenuItemInput!) {
@@ -9,26 +9,16 @@ const mutation = graphql`
   }
 `;
 
-function editMenuItem(data, onComplete) {
-  return commitMutation(env, {
-    mutation,
-    variables: {
-      id: data.id,
-      menuItem: {
-        title: data.title,
-        price: data.price,
-        menuCategory: data.categoryTitle,
-      },
+function editMenuItem(data, onComplete, onError) {
+  const variables = {
+    id: data.id,
+    menuItem: {
+      title: data.title,
+      price: data.price,
+      menuCategory: data.categoryId,
     },
-    onCompleted: (store) => {
-      if (onComplete) {
-        onComplete();
-      }
-    },
-    onError: (e) => {
-      alert('Something happened on the server');
-    },
-  });
+  }
+  return sendMutation(mutation, variables, onComplete, onError);
 }
 
 export default editMenuItem;

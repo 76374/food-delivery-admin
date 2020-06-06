@@ -30,6 +30,7 @@ query MenuPageQuery {
 }
 
 fragment MenuCategory_menuCategory on MenuCategory {
+  id
   title
   items {
     ...MenuItem_menuItem
@@ -45,6 +46,13 @@ fragment MenuItem_menuItem on MenuItem {
 
 const node/*: ConcreteRequest*/ = (function(){
 var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -92,6 +100,7 @@ return {
         "plural": true,
         "selections": [
           (v0/*: any*/),
+          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -100,14 +109,8 @@ return {
             "name": "items",
             "plural": true,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "id",
-                "storageKey": null
-              },
               (v0/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -128,7 +131,7 @@ return {
     "metadata": {},
     "name": "MenuPageQuery",
     "operationKind": "query",
-    "text": "query MenuPageQuery {\n  menu {\n    ...MenuCategory_menuCategory\n  }\n}\n\nfragment MenuCategory_menuCategory on MenuCategory {\n  title\n  items {\n    ...MenuItem_menuItem\n  }\n}\n\nfragment MenuItem_menuItem on MenuItem {\n  id\n  title\n  price\n}\n"
+    "text": "query MenuPageQuery {\n  menu {\n    ...MenuCategory_menuCategory\n  }\n}\n\nfragment MenuCategory_menuCategory on MenuCategory {\n  id\n  title\n  items {\n    ...MenuItem_menuItem\n  }\n}\n\nfragment MenuItem_menuItem on MenuItem {\n  id\n  title\n  price\n}\n"
   }
 };
 })();

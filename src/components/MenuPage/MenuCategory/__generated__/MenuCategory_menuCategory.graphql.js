@@ -13,6 +13,7 @@ import type { FragmentReference } from "relay-runtime";
 declare export opaque type MenuCategory_menuCategory$ref: FragmentReference;
 declare export opaque type MenuCategory_menuCategory$fragmentType: MenuCategory_menuCategory$ref;
 export type MenuCategory_menuCategory = {|
+  +id: string,
   +title: string,
   +items: $ReadOnlyArray<?{|
     +$fragmentRefs: MenuItem_menuItem$ref
@@ -34,6 +35,13 @@ const node/*: ReaderFragment*/ = {
   "metadata": null,
   "name": "MenuCategory_menuCategory",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -61,6 +69,6 @@ const node/*: ReaderFragment*/ = {
   "type": "MenuCategory"
 };
 // prettier-ignore
-(node/*: any*/).hash = '3b5d29a7fcdbebe5c4c68b013baac239';
+(node/*: any*/).hash = '55158cce1ca610d38b9741587c425dfa';
 
 module.exports = node;
