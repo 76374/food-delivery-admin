@@ -1,15 +1,17 @@
 import { useCallback, useEffect, useState } from 'react';
+import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import MenuBook from '@material-ui/icons/MenuBook';
 import ListAlt from '@material-ui/icons/ListAlt';
+import Schedule from '@material-ui/icons/Schedule';
 import { useRouter } from 'next/router';
 import { page } from '../../consts/path';
-import { Paper } from '@material-ui/core';
 
 const tab = {
   menu: 0,
   orders: 1,
+  schedule: 2,
 };
 
 const getUrl = (tabValue) => {
@@ -18,6 +20,8 @@ const getUrl = (tabValue) => {
       return page.menu;
     case 1:
       return page.orders;
+    case 2:
+      return page.schedule;
     default:
       throw new Error('Unexpected page value ' + tabValue);
   }
@@ -29,6 +33,8 @@ const getTabIndex = (path) => {
       return 0;
     case page.orders:
       return 1;
+    case page.schedule:
+      return 2;
     default:
       throw new Error('Unexpected page value ' + tabValue);
   }
@@ -52,6 +58,7 @@ const NavBar = () => {
       <Tabs value={currentTab} onChange={onTabChange} centered>
         <Tab icon={<MenuBook />} value={tab.menu} />
         <Tab label={<ListAlt />} value={tab.orders} />
+        <Tab label={<Schedule />} value={tab.schedule} />
       </Tabs>
     </Paper>
   );

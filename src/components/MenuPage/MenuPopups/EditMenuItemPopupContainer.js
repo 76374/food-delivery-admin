@@ -25,7 +25,7 @@ const EditMenuItemPopupContainer = (props) => {
         );
       } else {
         createMenuItem(
-          { title: data.title, price: data.price, category: categoryId },
+          { title: data.title, price: data.price, categoryId: categoryId },
           editCompleteHandler,
           editErrorHandler
         );

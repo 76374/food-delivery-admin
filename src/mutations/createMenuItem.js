@@ -14,7 +14,7 @@ function createMenuItem(data, onComplete, onError) {
     menuItem: {
       title: data.title,
       price: data.price,
-      menuCategory: data.categoryTitle,
+      menuCategory: data.categoryId,
     },
   };
   return sendMutation(mutation, variables, onComplete, onError);
