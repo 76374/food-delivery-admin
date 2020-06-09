@@ -8,7 +8,7 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-type ScheduleItem_scheduleItem$ref = any;
+type ScheduleCategory_scheduleCategory$ref = any;
 export type MenuSchedulePageQueryVariables = {|
   date: any
 |};
@@ -16,8 +16,8 @@ export type MenuSchedulePageQueryResponse = {|
   +menuSchedule: ?{|
     +id: string,
     +date: ?any,
-    +items: $ReadOnlyArray<?{|
-      +$fragmentRefs: ScheduleItem_scheduleItem$ref
+    +categories: $ReadOnlyArray<?{|
+      +$fragmentRefs: ScheduleCategory_scheduleCategory$ref
     |}>,
   |}
 |};
@@ -35,13 +35,22 @@ query MenuSchedulePageQuery(
   menuSchedule(date: $date) {
     id
     date
-    items {
-      ...ScheduleItem_scheduleItem
+    categories {
+      ...ScheduleCategory_scheduleCategory
     }
   }
 }
 
-fragment ScheduleItem_scheduleItem on MenuItem {
+fragment ScheduleCategory_scheduleCategory on ScheduleCategory {
+  category {
+    title
+  }
+  items {
+    ...ScheduleItem_menuItem
+  }
+}
+
+fragment ScheduleItem_menuItem on MenuItem {
   id
   title
   price
@@ -77,6 +86,13 @@ v3 = {
   "kind": "ScalarField",
   "name": "date",
   "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -98,15 +114,15 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "MenuItem",
+            "concreteType": "ScheduleCategory",
             "kind": "LinkedField",
-            "name": "items",
+            "name": "categories",
             "plural": true,
             "selections": [
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "ScheduleItem_scheduleItem"
+                "name": "ScheduleCategory_scheduleCategory"
               }
             ],
             "storageKey": null
@@ -136,24 +152,41 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "MenuItem",
+            "concreteType": "ScheduleCategory",
             "kind": "LinkedField",
-            "name": "items",
+            "name": "categories",
             "plural": true,
             "selections": [
-              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "title",
+                "concreteType": "MenuCategory",
+                "kind": "LinkedField",
+                "name": "category",
+                "plural": false,
+                "selections": [
+                  (v4/*: any*/)
+                ],
                 "storageKey": null
               },
               {
                 "alias": null,
                 "args": null,
-                "kind": "ScalarField",
-                "name": "price",
+                "concreteType": "MenuItem",
+                "kind": "LinkedField",
+                "name": "items",
+                "plural": true,
+                "selections": [
+                  (v2/*: any*/),
+                  (v4/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "price",
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": null
               }
             ],
@@ -169,11 +202,11 @@ return {
     "metadata": {},
     "name": "MenuSchedulePageQuery",
     "operationKind": "query",
-    "text": "query MenuSchedulePageQuery(\n  $date: Date!\n) {\n  menuSchedule(date: $date) {\n    id\n    date\n    items {\n      ...ScheduleItem_scheduleItem\n    }\n  }\n}\n\nfragment ScheduleItem_scheduleItem on MenuItem {\n  id\n  title\n  price\n}\n"
+    "text": "query MenuSchedulePageQuery(\n  $date: Date!\n) {\n  menuSchedule(date: $date) {\n    id\n    date\n    categories {\n      ...ScheduleCategory_scheduleCategory\n    }\n  }\n}\n\nfragment ScheduleCategory_scheduleCategory on ScheduleCategory {\n  category {\n    title\n  }\n  items {\n    ...ScheduleItem_menuItem\n  }\n}\n\nfragment ScheduleItem_menuItem on MenuItem {\n  id\n  title\n  price\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'c24d96952162e75efe01fb302e803a56';
+(node/*: any*/).hash = '4e0f619497ec5c3cecb9b61ba6db8533';
 
 module.exports = node;

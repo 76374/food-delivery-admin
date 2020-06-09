@@ -14,6 +14,7 @@ const MenuListQuery = graphql`
 const MenuList = (props) => {
   const render = (renderProps) => (
     <MenuListLayout
+      date={props.date}
       menu={renderProps.props && renderProps.props.menu}
       error={renderProps.error}
       onCancel={props.onCancel}

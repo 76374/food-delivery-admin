@@ -4,7 +4,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import MenuListItem from './MenuListItem';
 
 const MenuListCategory = (props) => {
-  const { menuCategory, onItemAdd, onItemRemove } = props;
+  const { menuCategory, disabled, onItemAdd, onItemRemove } = props;
   const { title, items } = menuCategory;
 
   const itemChangeHandler = useCallback(
@@ -22,7 +22,7 @@ const MenuListCategory = (props) => {
     <>
       <FormLabel>{title}</FormLabel>
       {items.map((i) => (
-        <MenuListItem menuItem={i} key={i.__id} onChange={itemChangeHandler} />
+        <MenuListItem menuItem={i} key={i.__id} disabled={disabled} onChange={itemChangeHandler} />
       ))}
     </>
   );

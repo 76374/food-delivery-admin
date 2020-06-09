@@ -5,7 +5,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const MenuListItem = (props) => {
-  const { menuItem, onChange } = props;
+  const { menuItem, disabled, onChange } = props;
   const [isChecked, setIsChecked] = useState(false);
   const changeHandler = useCallback(
     (e, checked) => {
@@ -18,7 +18,12 @@ const MenuListItem = (props) => {
     <FormGroup>
       <FormControlLabel
         control={
-          <Checkbox checked={isChecked} onChange={changeHandler} name="gilad" size="small" />
+          <Checkbox
+            checked={isChecked}
+            disabled={disabled}
+            onChange={changeHandler}
+            size="small"
+          />
         }
         label={menuItem.title}
       />
