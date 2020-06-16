@@ -5,7 +5,6 @@ import ScheduleItem from './ScheduleItem/ScheduleItem';
 
 const ScheduleCategory = (props) => {
   const data = props.scheduleCategory;
-  console.log(data);
   return (
     <>
       <Typography variant="h6">{data.category.title}</Typography>

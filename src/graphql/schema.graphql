@@ -10,10 +10,6 @@ type Query {
 }
 
 type Mutation {
-  createOrder(input: CreateOrderInput!): Order
-  signIn(input: SignInInput!): AuthData
-  signUp(input: SignUpInput!): AuthData
-
   createMenuCategory(title: String!): MenuCategory
   editMenuCategory(id: String!, title: String!): MenuCategory
   deleteMenuCategory(id: String!): Void
@@ -89,16 +85,4 @@ input CreateOrderInput {
 input OrderInput {
   itemId: String!
   itemsCount: Int!
-}
-
-input SignUpInput {
-  email: String!
-  firstName: String!
-  lastName: String!
-  pwd: String!
-}
-
-input SignInInput {
-  email: String!
-  pwd: String!
 }

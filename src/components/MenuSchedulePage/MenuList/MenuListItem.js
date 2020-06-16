@@ -1,16 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { createFragmentContainer, graphql } from 'react-relay';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const MenuListItem = (props) => {
-  const { menuItem, disabled, onChange } = props;
-  const [isChecked, setIsChecked] = useState(false);
+  const { isChecked, menuItem, disabled, onChange } = props;
   const changeHandler = useCallback(
     (e, checked) => {
-      setIsChecked(checked);
-      onChange && onChange(checked, menuItem.id);
+      onChange && onChange(checked);
     },
     [menuItem, onChange]
   );

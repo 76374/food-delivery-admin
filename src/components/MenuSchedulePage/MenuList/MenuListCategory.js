@@ -4,7 +4,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import MenuListItem from './MenuListItem';
 
 const MenuListCategory = (props) => {
-  const { menuCategory, disabled, onItemAdd, onItemRemove } = props;
+  const { menuCategory, disabled, checkedItems, onItemAdd, onItemRemove } = props;
   const { title, items } = menuCategory;
 
   const itemChangeHandler = useCallback(
@@ -18,11 +18,21 @@ const MenuListCategory = (props) => {
     [onItemAdd, onItemRemove]
   );
 
+  const getIsChecked = (id) => (
+    checkedItems ? checkedItems.includes(id) : false
+  );
+
   return (
     <>
       <FormLabel>{title}</FormLabel>
       {items.map((i) => (
-        <MenuListItem menuItem={i} key={i.__id} disabled={disabled} onChange={itemChangeHandler} />
+        <MenuListItem
+          menuItem={i}
+          isChecked={getIsChecked(i.id)}
+          key={'MenuListItem-' + i.id}
+          disabled={disabled}
+          onChange={(checked) => itemChangeHandler(checked, i.id)}
+        />
       ))}
     </>
   );
@@ -34,6 +44,7 @@ export default createFragmentContainer(MenuListCategory, {
       id
       title
       items {
+        id
         ...MenuListItem_menuItem
       }
     }

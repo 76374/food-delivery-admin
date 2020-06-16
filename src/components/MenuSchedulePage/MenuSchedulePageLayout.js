@@ -44,7 +44,6 @@ const MenuSchedulePageLayout = (props) => {
       </Button>
     );
   } else {
-    console.log(data);
     mainLayout = (
       <>
         <Button variant="contained" color="primary" onClick={editClickHandler}>

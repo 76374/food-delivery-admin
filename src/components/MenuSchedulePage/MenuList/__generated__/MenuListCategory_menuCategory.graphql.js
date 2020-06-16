@@ -16,7 +16,8 @@ export type MenuListCategory_menuCategory = {|
   +id: string,
   +title: string,
   +items: $ReadOnlyArray<?{|
-    +$fragmentRefs: MenuListItem_menuItem$ref
+    +id: string,
+    +$fragmentRefs: MenuListItem_menuItem$ref,
   |}>,
   +$refType: MenuListCategory_menuCategory$ref,
 |};
@@ -29,19 +30,21 @@ export type MenuListCategory_menuCategory$key = {
 */
 
 
-const node/*: ReaderFragment*/ = {
+const node/*: ReaderFragment*/ = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "MenuListCategory_menuCategory",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -57,6 +60,7 @@ const node/*: ReaderFragment*/ = {
       "name": "items",
       "plural": true,
       "selections": [
+        (v0/*: any*/),
         {
           "args": null,
           "kind": "FragmentSpread",
@@ -68,7 +72,8 @@ const node/*: ReaderFragment*/ = {
   ],
   "type": "MenuCategory"
 };
+})();
 // prettier-ignore
-(node/*: any*/).hash = 'a03ce24bd474a886e81f79c44b056c58';
+(node/*: any*/).hash = 'bc08b0d5e99e1074203c82e57129d5b3';
 
 module.exports = node;

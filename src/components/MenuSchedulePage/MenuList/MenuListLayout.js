@@ -11,9 +11,9 @@ import setSchedule from '../../../mutations/setSchedule';
 const getLoading = () => <LinearProgress color="secondary" />;
 
 const MenuListLayout = (props) => {
-  const { menu, date, onCancel } = props;
+  const { menu, menuSchedule, date, onCancel } = props;
 
-  const [selectedItems, setSelectedItems] = useState([]);
+  const [checkedItems, setCheckedItems] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const onCancelClick = useCallback(() => {
@@ -21,30 +21,49 @@ const MenuListLayout = (props) => {
   }, [onCancel]);
 
   const itemAddHandler = useCallback(
-    (id) => {
-      setSelectedItems((prevItems) => [...prevItems, id]);
+    (categoryId, itemId) => {
+      setCheckedItems((checkedItems) => {
+        checkedItems = checkedItems ? { ...checkedItems } : {};
+        if (!checkedItems[categoryId]) {
+          checkedItems[categoryId] = [itemId];
+        } else {
+          checkedItems[categoryId] = [...checkedItems[categoryId], itemId];
+        }
+        return checkedItems;
+      });
     },
-    [setSelectedItems]
+    [setCheckedItems]
   );
 
   const itemRemoveHandler = useCallback(
-    (id) => {
-      setSelectedItems((prevItems) => prevItems.filter((i) => i !== id));
+    (categoryId, itemId) => {
+      setCheckedItems((checkedItems) => {
+        if (!checkedItems || !checkedItems[categoryId]) {
+          return;
+        }
+        checkedItems = { ...checkedItems };
+        checkedItems[categoryId] = checkedItems[categoryId].filter((i) => i !== itemId);
+        return checkedItems;
+      });
     },
-    [setSelectedItems]
+    [setCheckedItems]
   );
 
   const submitClickHandler = useCallback(() => {
+    if (!checkedItems) {
+      return;
+    }
     setIsLoading(true);
+    const itemIds = Object.values(checkedItems).flat();
     setSchedule(
       {
-        items: selectedItems,
+        items: itemIds,
         date: date,
       },
       setSheduleCompleteHandler,
       setSheduleErrorHandler
     );
-  }, [selectedItems, date]);
+  }, [checkedItems, date]);
 
   const setSheduleCompleteHandler = useCallback(() => {
     Router.reload();
@@ -58,18 +77,27 @@ const MenuListLayout = (props) => {
     return getLoading();
   }
 
+  if (!checkedItems && menuSchedule && menuSchedule.categories) {
+    const ci = {};
+    menuSchedule.categories.forEach((c) => {
+      ci[c.category.id] = c.items.map((i) => i.id);
+    });
+    setCheckedItems(ci);
+  }
+
   return (
     <ContentContainer
       content={
         <>
           {isLoading ? getLoading() : null}
-          {menu.map((i) => (
+          {menu.map((cat) => (
             <MenuListCategory
-              menuCategory={i}
-              key={i.__id}
+              menuCategory={cat}
+              key={'MenuListCategory-' + cat.id}
               disabled={isLoading}
-              onItemAdd={itemAddHandler}
-              onItemRemove={itemRemoveHandler}
+              onItemAdd={(itemId) => itemAddHandler(cat.id, itemId)}
+              onItemRemove={(itemId) => itemRemoveHandler(cat.id, itemId)}
+              checkedItems={checkedItems && checkedItems[cat.id]}
             />
           ))}
           <div>
