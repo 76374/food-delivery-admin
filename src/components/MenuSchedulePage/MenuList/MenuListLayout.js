@@ -1,5 +1,4 @@
-import React, { useCallback, useState } from 'react';
-import Router from 'next/router';
+import React, { useCallback, useState, useEffect } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import DoneOutline from '@material-ui/icons/DoneOutline';
 import HighlightOff from '@material-ui/icons/HighlightOff';
@@ -11,10 +10,20 @@ import setSchedule from '../../../mutations/setSchedule';
 const getLoading = () => <LinearProgress color="secondary" />;
 
 const MenuListLayout = (props) => {
-  const { menu, menuSchedule, date, onCancel } = props;
+  const { menu, menuSchedule, date, onCancel, onEditComplete } = props;
 
   const [checkedItems, setCheckedItems] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const checkedItems = {};
+    if (menuSchedule && menuSchedule.categories) {
+      menuSchedule.categories.forEach((c) => {
+        checkedItems[c.category.id] = c.items.map((i) => i.id);
+      });
+    }
+    setCheckedItems(checkedItems);
+  }, [menuSchedule]);
 
   const onCancelClick = useCallback(() => {
     onCancel && onCancel();
@@ -66,7 +75,10 @@ const MenuListLayout = (props) => {
   }, [checkedItems, date]);
 
   const setSheduleCompleteHandler = useCallback(() => {
-    Router.reload();
+    //router.push(`${router.pathname}?date=${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
+    //router.push(router.pathname, {query: {date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`}});
+    onEditComplete && onEditComplete();
+    //router.reload();
   }, []);
 
   const setSheduleErrorHandler = useCallback(() => {
@@ -75,14 +87,6 @@ const MenuListLayout = (props) => {
 
   if (!menu) {
     return getLoading();
-  }
-
-  if (!checkedItems && menuSchedule && menuSchedule.categories) {
-    const ci = {};
-    menuSchedule.categories.forEach((c) => {
-      ci[c.category.id] = c.items.map((i) => i.id);
-    });
-    setCheckedItems(ci);
   }
 
   return (

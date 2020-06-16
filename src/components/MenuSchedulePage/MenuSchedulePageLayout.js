@@ -9,10 +9,9 @@ import MenuList from './MenuList/MenuList';
 import ContentContainer from '../ContentContainer/ContentContainer';
 import ScheduleCategory from './ScheduleCategory/ScheduleCategory';
 
-
 const MenuSchedulePageLayout = (props) => {
   const data = props.menuSchedule;
-  const { date, error, onDateChange } = props;
+  const { date, error, onDateChange, onEditComplete } = props;
 
   const [editMode, setEditMode] = useState(false);
 
@@ -28,15 +27,22 @@ const MenuSchedulePageLayout = (props) => {
     setEditMode(false);
   }, []);
 
+  const editCompleteHandler = () => {
+    setEditMode(false);
+    onEditComplete();
+  };
+
   const handleDateChange = useCallback((date) => {
     onDateChange && onDateChange(date);
   }, []);
 
   let mainLayout;
   if (error) {
-    mainLayout = <Typography color="error">{error.message}</Typography>
+    mainLayout = <Typography color="error">{error.message}</Typography>;
   } else if (editMode) {
-    mainLayout = <MenuList date={date} onCancel={editCancelHandler} />;
+    mainLayout = (
+      <MenuList date={date} onCancel={editCancelHandler} onEditComplete={editCompleteHandler} />
+    );
   } else if (!data) {
     mainLayout = (
       <Button variant="contained" color="primary" onClick={addClickHandler}>
@@ -49,7 +55,7 @@ const MenuSchedulePageLayout = (props) => {
         <Button variant="contained" color="primary" onClick={editClickHandler}>
           <EditIcon />
         </Button>
-        <br/>
+        <br />
         {data.categories.map((i) => (
           <ScheduleCategory scheduleCategory={i} key={i.__id} />
         ))}

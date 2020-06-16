@@ -31,6 +31,7 @@ const MenuList = (props) => {
       menuSchedule={renderProps.props && renderProps.props.menuSchedule}
       error={renderProps.error}
       onCancel={props.onCancel}
+      onEditComplete={props.onEditComplete}
     />
   );
   return (

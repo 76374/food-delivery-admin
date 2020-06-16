@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { graphql, QueryRenderer } from 'react-relay';
 import env from '../../Environment';
 import MenuSchedulePageLayout from './MenuSchedulePageLayout';
@@ -22,14 +22,18 @@ const MenuSchedulePage = () => {
     setDate(date);
   };
 
-  const render = ({ error, props }) => (
-    <MenuSchedulePageLayout
-      date={date}
-      menuSchedule={props && props.menuSchedule}
-      error={error}
-      onDateChange={dateChangeHandler}
-    />
-  );
+  const render = (renderProps) => {
+    const { error, props, retry } = renderProps;
+    return (
+      <MenuSchedulePageLayout
+        date={date}
+        menuSchedule={props && props.menuSchedule}
+        error={error}
+        onDateChange={dateChangeHandler}
+        onEditComplete={retry}
+      />
+    );
+  };
   return (
     <QueryRenderer
       environment={env}
